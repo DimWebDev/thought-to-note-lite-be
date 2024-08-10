@@ -1,22 +1,10 @@
 services:
   postgres:
     image: 'postgres:16'
+    container_name: thought_to_note_lite_db
     environment:
-      - 'POSTGRES_DB=thoughttonotelitedb'
+      - 'POSTGRES_DB=thoughttnotelitedb'
       - 'POSTGRES_USER=postgres'
       - 'POSTGRES_PASSWORD=postgres'
     ports:
       - '5432:5432'
-    # Volumes can be used to persist data across container restarts.
-    # This prevents data loss when the container is stopped or removed.
-    # However, enabling this will store PostgreSQL data on your local machine,
-    # which could take up disk space. If you prefer not to store data locally,
-    # you can leave the volume configuration commented out as shown below.
-    #
-    # volumes:
-    #   - postgres_data:/var/lib/postgresql/data  # Persist data using a named volume
-
-    # Declaring the volume
-    # This volume will be created locally on your machine and will persist data
-    # even if the container is stopped or removed. Uncomment the section above
-    # if you decide to use it.

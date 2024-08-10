@@ -22,7 +22,10 @@ documentation.md
 
 # Maven output
 /target/
-!.mvn/wrapper/maven-wrapper.jar
+# Maven Wrapper files
+.mvn/
+mvnw
+mvnw.cmd
 
 # Gradle specific directories and files
 .gradle/
