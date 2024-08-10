@@ -1,6 +1,5 @@
-package com.thoughttonotelite.unit.model;
+package com.thoughttonotelite.model;
 
-import com.thoughttonotelite.model.Note;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -44,7 +43,7 @@ class NoteEntityTest {
         assertThat(note.getCreatedAt()).isNotNull();
         assertThat(note.getUpdatedAt()).isNotNull();
 
-        // Allow for a small time difference due to processing time
+        // Allow for a slight time difference due to processing time
         Duration difference = Duration.between(note.getCreatedAt(), note.getUpdatedAt());
         assertThat(difference).isLessThanOrEqualTo(Duration.ofMillis(10)); // Allowable difference of 10 milliseconds
     }

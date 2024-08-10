@@ -1,7 +1,6 @@
 services:
   postgres:
     image: 'postgres:16'
-    container_name: thought_to_note_lite_db
     environment:
       - 'POSTGRES_DB=thoughttnotelitedb'
       - 'POSTGRES_USER=postgres'
