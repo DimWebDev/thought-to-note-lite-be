@@ -1,0 +1,82 @@
+# IntelliJ IDEA specific files
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Exclude specific IntelliJ IDEA files if they exist
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/libraries
+
+# Java specific files
+*.class
+*.jar
+*.war
+*.ear
+*.javadoc
+*.log
+
+
+# Maven output
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Gradle specific directories and files
+.gradle/
+build/
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+
+# Eclipse specific files
+.classpath
+.project
+.settings/
+
+# NetBeans specific directories
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# VSCode specific files
+.vscode/
+
+# General build directories
+build/
+dist/
+out/
+temp/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+*.bak
+*.old
+*.orig
+*.rej
+
+# Backup and compression files
+*.bak
+*.backup
+*.zip
+*.rar
+*.7z
+*.tar.gz
+*.tar
+
+# Operating system specific files
+Thumbs.db
+.DS_Store
+
+# Miscellaneous files
+*.class
+*.jar
+*.war
+*.ear
+*.iml
