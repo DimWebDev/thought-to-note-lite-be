@@ -18,6 +18,7 @@
 *.javadoc
 *.log
 
+documentation.md
 
 # Maven output
 /target/
