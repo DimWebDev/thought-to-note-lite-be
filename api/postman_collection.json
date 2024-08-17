@@ -1,0 +1,139 @@
+{
+  "info": {
+    "name": "ThoughtToNote Lite API",
+    "description": "This Postman collection is created to facilitate the testing and development of the ThoughtToNote Lite API. It includes all CRUD operations for Note entities, ensuring that the API functions correctly and consistently. The collection helps in validating API endpoints, testing search functionality, ensuring API stability, and assisting in debugging, documentation, and team collaboration.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdBy": "Dimitrios"
+  },
+  "item": [
+    {
+      "name": "Get All Notes",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/notes",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "notes"]
+        }
+      }
+    },
+    {
+      "name": "Get Note by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/notes/{{id}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "notes", "{{id}}"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "1",
+              "description": "ID of the note to retrieve"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create Note",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"New Note\",\n  \"content\": \"This is a new note.\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/notes",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "notes"]
+        }
+      }
+    },
+    {
+      "name": "Update Note",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Updated Note\",\n  \"content\": \"This is an updated note.\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/notes/{{id}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "notes", "{{id}}"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "1",
+              "description": "ID of the note to update"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Delete Note",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/notes/{{id}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "notes", "{{id}}"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "1",
+              "description": "ID of the note to delete"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Search Notes by Title",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/notes/search?title={{keyword}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "notes", "search"],
+          "query": [
+            {
+              "key": "title",
+              "value": "{{keyword}}"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
