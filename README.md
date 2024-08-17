@@ -509,4 +509,3 @@ This security configuration is specifically tailored for the development phase. 
 - Replace `NoOpPasswordEncoder` with a secure password encoder like `BCryptPasswordEncoder`.
 - Store credentials securely, and ensure they are not hard-coded or exposed in configuration files.
 
-By following these practices, you can enhance the security of the application when it's ready to be deployed in a live environment.
