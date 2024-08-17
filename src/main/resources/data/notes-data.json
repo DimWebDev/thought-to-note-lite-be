@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Grocery Shopping List",
+    "content": "1. Milk\n2. Eggs\n3. Bread\n4. Chicken Breast\n5. Spinach\n6. Bananas\n7. Rice\n8. Olive Oil\n9. Yogurt\n10. Tomatoes",
+    "createdAt": "2024-08-01T10:00:00",
+    "updatedAt": "2024-08-01T10:00:00"
+  },
+  {
+    "title": "Weekly Workout Plan",
+    "content": "Monday: Chest and Triceps\n- Bench Press: 4 sets of 10 reps\n- Tricep Dips: 3 sets of 12 reps\n- Push-Ups: 3 sets of 15 reps\n\nWednesday: Back and Biceps\n- Pull-Ups: 4 sets of 8 reps\n- Bicep Curls: 3 sets of 12 reps\n- Deadlifts: 4 sets of 10 reps\n\nFriday: Legs and Shoulders\n- Squats: 4 sets of 10 reps\n- Lunges: 3 sets of 12 reps\n- Shoulder Press: 3 sets of 12 reps",
+    "createdAt": "2024-08-02T11:00:00",
+    "updatedAt": "2024-08-02T11:00:00"
+  },
+  {
+    "title": "Meeting Agenda for Project X",
+    "content": "1. Project status update\n2. Review milestones\n3. Discuss potential risks\n4. Allocate tasks for the next sprint\n5. Q&A session",
+    "createdAt": "2024-08-03T12:00:00",
+    "updatedAt": "2024-08-03T12:00:00"
+  },
+  {
+    "title": "Weekend Chores",
+    "content": "1. Clean the garage\n2. Mow the lawn\n3. Wash the car\n4. Organize the pantry\n5. Do laundry",
+    "createdAt": "2024-08-04T13:00:00",
+    "updatedAt": "2024-08-04T13:00:00"
+  },
+  {
+    "title": "Personal Development Goals",
+    "content": "1. Finish reading 'Atomic Habits' by the end of August\n2. Practice meditation daily for 10 minutes\n3. Complete an online course on Python programming\n4. Write in the journal every night before bed\n5. Set aside 30 minutes each day for language learning",
+    "createdAt": "2024-08-05T14:00:00",
+    "updatedAt": "2024-08-05T14:00:00"
+  }
+]
