@@ -8,6 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -100,5 +102,109 @@ public class NoteServiceTest {
         assertEquals("New Content", updatedNote.getContent());  // Verify that the content was updated
     }
 
-    // Add more tests for deleteNoteById, getAllNotes, getNoteById, etc.
+    /**
+     * Test for deleting a note by its ID.
+     * <p>
+     * This test verifies that the {@link NoteService#deleteNoteById(Long)} method correctly interacts with
+     * the {@link NoteRepository#existsById(Object)} and {@link NoteRepository#deleteById(Object)} methods.
+     * The repository's existsById method is mocked to return true, and the deleteById method is mocked to
+     * perform the deletion. The test asserts that no exceptions are thrown during the deletion process.
+     * </p>
+     */
+    @Test
+    public void testDeleteNoteById() {
+        // Mock the behavior of the NoteRepository to return true when existsById is called
+        when(noteRepository.existsById(1L)).thenReturn(true);
+
+        // Call the deleteNoteById method and assert that no exceptions are thrown
+        assertDoesNotThrow(() -> noteService.deleteNoteById(1L));
+    }
+
+    /**
+     * Test for retrieving all notes.
+     * <p>
+     * This test verifies that the {@link NoteService#getAllNotes()} method correctly interacts with
+     * the {@link NoteRepository#findAll()} method to retrieve all notes. The repository's findAll method
+     * is mocked to return a list of notes, and the test asserts that the returned list is not null and
+     * contains the expected notes.
+     * </p>
+     */
+    @Test
+    public void testGetAllNotes() {
+        // Create a list of mock Note objects
+        List<Note> notes = Arrays.asList(
+                new Note() {{ setId(1L); setTitle("Note 1"); setContent("Content 1"); }},
+                new Note() {{ setId(2L); setTitle("Note 2"); setContent("Content 2"); }}
+        );
+
+        // Mock the behavior of the NoteRepository to return the list of notes when findAll is called
+        when(noteRepository.findAll()).thenReturn(notes);
+
+        // Call the getAllNotes method and assert the results
+        List<Note> retrievedNotes = noteService.getAllNotes();
+
+        assertNotNull(retrievedNotes);  // Verify that the retrieved list is not null
+        assertEquals(2, retrievedNotes.size());  // Verify that the list contains the expected number of notes
+        assertEquals("Note 1", retrievedNotes.get(0).getTitle());  // Verify the title of the first note
+        assertEquals("Note 2", retrievedNotes.get(1).getTitle());  // Verify the title of the second note
+    }
+
+    /**
+     * Test for retrieving a note by its ID.
+     * <p>
+     * This test verifies that the {@link NoteService#getNoteById(Long)} method correctly interacts with
+     * the {@link NoteRepository#findById(Object)} method to retrieve a note by its ID. The repository's
+     * findById method is mocked to return an Optional containing a note, and the test asserts that the
+     * returned note is not null and contains the expected details.
+     * </p>
+     */
+    @Test
+    public void testGetNoteById() {
+        // Create a mock Note object
+        Note note = new Note();
+        note.setId(1L);
+        note.setTitle("Test Note");
+        note.setContent("Test Content");
+
+        // Mock the behavior of the NoteRepository to return the note when findById is called
+        when(noteRepository.findById(1L)).thenReturn(Optional.of(note));
+
+        // Call the getNoteById method and assert the results
+        Note retrievedNote = noteService.getNoteById(1L);
+
+        assertNotNull(retrievedNote);  // Verify that the retrieved note is not null
+        assertEquals(1L, retrievedNote.getId());  // Verify that the ID is as expected
+        assertEquals("Test Note", retrievedNote.getTitle());  // Verify that the title is as expected
+        assertEquals("Test Content", retrievedNote.getContent());  // Verify that the content is as expected
+    }
+
+    /**
+     * Test for searching notes by title.
+     * <p>
+     * This test verifies that the {@link NoteService#searchNotesByTitle(String)} method correctly interacts with
+     * the {@link NoteRepository#findByTitleContainingIgnoreCase(String)} method to search for notes by title.
+     * The repository's findByTitleContainingIgnoreCase method is mocked to return a list of notes, and the test
+     * asserts that the returned list is not null and contains the expected notes.
+     * </p>
+     */
+    @Test
+    public void testSearchNotesByTitle() {
+        // Create a list of mock Note objects
+        List<Note> notes = Arrays.asList(
+                new Note() {{ setId(1L); setTitle("Test Note 1"); setContent("Content 1"); }},
+                new Note() {{ setId(2L); setTitle("Another Test Note"); setContent("Content 2"); }}
+        );
+
+        // Mock the behavior of the NoteRepository to return the list of notes when findByTitleContainingIgnoreCase is called
+        when(noteRepository.findByTitleContainingIgnoreCase("Test")).thenReturn(notes);
+
+        // Call the searchNotesByTitle method and assert the results
+        List<Note> retrievedNotes = noteService.searchNotesByTitle("Test");
+
+        assertNotNull(retrievedNotes);  // Verify that the retrieved list is not null
+        assertEquals(2, retrievedNotes.size());  // Verify that the list contains the expected number of notes
+        assertEquals("Test Note 1", retrievedNotes.get(0).getTitle());  // Verify the title of the first note
+        assertEquals("Another Test Note", retrievedNotes.get(1).getTitle());  // Verify the title of the second note
+    }
+
 }
