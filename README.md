@@ -144,7 +144,7 @@ To ensure consistency across different environments, it's recommended to set up 
   - This command will create a `.mvn/wrapper` directory containing the necessary Maven Wrapper files.
 
 - **Using Maven Wrapper**:
-  - Once the Maven Wrapper is set up, replace the `mvn` command with `./mvnw` (on Unix/Linux/macOS) or `mvnw.cmd` (on Windows) in your commands. For example, to run all tests:
+  - Once the Maven Wrapper is set up, replace the `mvn` command with `./mvnw` (on Unix/Linux/macOS) or `mvnw.cmd` (on Windows) in your commands. Take into consideration that to run all tests the database inside the docker container must have been initialized because some tests use transactions. For example, to run all tests:
     ```bash
     ./mvnw test
     ```

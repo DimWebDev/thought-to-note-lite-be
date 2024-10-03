@@ -18,7 +18,10 @@
 *.javadoc
 *.log
 
+# Project specific files
 documentation.md
+project_docs.txt
+
 
 # Maven output
 /target/
