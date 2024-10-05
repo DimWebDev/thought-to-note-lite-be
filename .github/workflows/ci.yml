@@ -23,11 +23,7 @@ jobs:
           POSTGRES_DB: thoughttnotelitedb
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-        options: >
-          --health-cmd "pg_isready -U postgres" 
-          --health-interval 10s 
-          --health-timeout 5s 
-          --health-retries 5
+        options: "--health-cmd=\"pg_isready -U postgres\" --health-interval=10s --health-timeout=5s --health-retries=5"
 
     steps:
       # 1. Checkout the repository
@@ -54,16 +50,19 @@ jobs:
       - name: Install Dependencies
         run: mvn install -DskipTests
 
-      # 5. Start Docker Compose to set up PostgreSQL
-      - name: Start Docker Compose for PostgreSQL
-        run: docker-compose -f docker/compose.yaml up -d
+      # 5. Start Docker Compose to set up PostgreSQL (Optional if using services)
+      # If you're using GitHub Actions services, you might not need this step.
+      # Uncomment if needed.
+      # - name: Start Docker Compose for PostgreSQL
+      #   run: docker-compose -f docker/compose.yaml up -d
 
       # 6. Run Maven tests
       - name: Run Tests
         run: mvn test
 
-      # 7. Tear down Docker Compose services
-      - name: Shut Down Docker Compose
-        if: always()
-        run: docker-compose -fgit add .github/workflows/ci.yml
-          docker/compose.yaml down
+    # 7. Tear down Docker Compose services (Optional if using services)
+    # If you're using GitHub Actions services, they are automatically cleaned up.
+    # Uncomment if you started Docker Compose manually.
+    # - name: Shut Down Docker Compose
+    #   if: always()
+    #   run: docker-compose -f docker/compose.yaml down
