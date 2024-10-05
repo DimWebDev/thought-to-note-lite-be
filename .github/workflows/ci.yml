@@ -2,18 +2,36 @@
 
 name: CI Pipeline for Thought-to-Note Lite
 
+# Trigger the workflow on the following events:
 on:
+  # Trigger on pushes to main, develop, and any feature branches
   push:
     branches:
       - main
+      - develop
+      - 'feature/**'
+      - 'bugfix/**'
+      - 'hotfix/**'
+    tags:
+      - 'v*.*.*'  # Optional: Trigger on version tags like v1.0.0
+
+  # Trigger on pull requests targeting main, develop, and any feature branches
   pull_request:
     branches:
       - main
+      - develop
+      - 'feature/**'
+      - 'bugfix/**'
+      - 'hotfix/**'
+
+  # Allow manual triggering of the workflow
+  workflow_dispatch:
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    # Define PostgreSQL service using GitHub Actions services
     services:
       postgres:
         image: postgres:16
@@ -23,6 +41,7 @@ jobs:
           POSTGRES_DB: thoughttnotelitedb
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+        # Corrected options field to avoid newline characters
         options: "--health-cmd=\"pg_isready -U postgres\" --health-interval=10s --health-timeout=5s --health-retries=5"
 
     steps:
@@ -46,23 +65,32 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # 4. Install Maven dependencies
+      # 4. Install Maven dependencies without running tests
       - name: Install Dependencies
         run: mvn install -DskipTests
 
-      # 5. Start Docker Compose to set up PostgreSQL (Optional if using services)
-      # If you're using GitHub Actions services, you might not need this step.
-      # Uncomment if needed.
-      # - name: Start Docker Compose for PostgreSQL
-      #   run: docker-compose -f docker/compose.yaml up -d
+      # 5. Wait for PostgreSQL to be ready
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          for i in {1..30}; do
+            if docker exec $(docker ps -q -f ancestor=postgres:16) pg_isready -U postgres; then
+              echo "PostgreSQL is ready"
+              exit 0
+            fi
+            echo "Waiting for PostgreSQL..."
+            sleep 1
+          done
+          echo "PostgreSQL did not become ready in time."
+          exit 1
 
       # 6. Run Maven tests
       - name: Run Tests
         run: mvn test
 
-    # 7. Tear down Docker Compose services (Optional if using services)
-    # If you're using GitHub Actions services, they are automatically cleaned up.
-    # Uncomment if you started Docker Compose manually.
-    # - name: Shut Down Docker Compose
-    #   if: always()
-    #   run: docker-compose -f docker/compose.yaml down
+      # 7. (Optional) Collect and upload test reports
+      # Uncomment the following steps if you wish to collect test reports
+      # - name: Upload Test Results
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: test-results
+      #     path: target/surefire-reports/
