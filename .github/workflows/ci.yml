@@ -1,0 +1,69 @@
+# File: .github/workflows/ci.yml
+
+name: CI Pipeline for Thought-to-Note Lite
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: thoughttnotelitedb
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >
+          --health-cmd "pg_isready -U postgres" 
+          --health-interval 10s 
+          --health-timeout 5s 
+          --health-retries 5
+
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Set up Java environment (Java 21)
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      # 3. Cache Maven dependencies to speed up the build
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      # 4. Install Maven dependencies
+      - name: Install Dependencies
+        run: mvn install -DskipTests
+
+      # 5. Start Docker Compose to set up PostgreSQL
+      - name: Start Docker Compose for PostgreSQL
+        run: docker-compose -f docker/compose.yaml up -d
+
+      # 6. Run Maven tests
+      - name: Run Tests
+        run: mvn test
+
+      # 7. Tear down Docker Compose services
+      - name: Shut Down Docker Compose
+        if: always()
+        run: docker-compose -fgit add .github/workflows/ci.yml
+          docker/compose.yaml down
