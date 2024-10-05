@@ -9,6 +9,7 @@ on:
     branches:
       - main
       - develop
+      - 'develop/**'
       - 'feature/**'
       - 'bugfix/**'
       - 'hotfix/**'
