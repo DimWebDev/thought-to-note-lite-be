@@ -5,6 +5,11 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.DynamicPropertyRegistry;
 
 import java.time.Duration;
 
@@ -14,11 +19,31 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Test class for the Note entity.
  * This class contains tests to verify the persistence and integrity of the Note entity.
  */
-@SpringBootTest  // Load the full application context
+@SpringBootTest
+@Testcontainers
 class NoteEntityTest {
+
+    @Container
+    public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:16")
+            .withDatabaseName("thoughttnotelitedb")
+            .withUsername("postgres")
+            .withPassword("postgres");
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    /**
+     * Dynamically sets the Spring datasource properties to match the Testcontainers PostgreSQL instance.
+     *
+     * @param registry the dynamic property registry
+     */
+    @DynamicPropertySource
+    static void configureProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
+        registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
+        registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
+        registry.add("spring.jpa.hibernate.ddl-auto", () -> "create-drop"); // or your preferred setting
+    }
 
     /**
      * Test method to verify the persistence of a Note entity.
