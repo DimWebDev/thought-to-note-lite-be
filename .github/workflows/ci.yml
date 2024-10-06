@@ -31,19 +31,6 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
-    # Define PostgreSQL service using GitHub Actions services
-    services:
-      postgres:
-        image: postgres:16
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_DB: thoughttnotelitedb
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-        # Corrected options field to avoid newline characters
-        options: "--health-cmd=\"pg_isready -U postgres\" --health-interval=10s --health-timeout=5s --health-retries=5"
-
     steps:
       # 1. Checkout the repository
       - name: Checkout repository
@@ -69,25 +56,11 @@ jobs:
       - name: Install Dependencies
         run: mvn install -DskipTests
 
-      # 5. Wait for PostgreSQL to be ready
-      - name: Wait for PostgreSQL to be ready
-        run: |
-          for i in {1..30}; do
-            if docker exec $(docker ps -q -f ancestor=postgres:16) pg_isready -U postgres; then
-              echo "PostgreSQL is ready"
-              exit 0
-            fi
-            echo "Waiting for PostgreSQL..."
-            sleep 1
-          done
-          echo "PostgreSQL did not become ready in time."
-          exit 1
-
-      # 6. Run Maven tests
+      # 5. Run Maven tests
       - name: Run Tests
         run: mvn test
 
-      # 7. (Optional) Collect and upload test reports
+      # 6. (Optional) Collect and upload test reports
       # Uncomment the following steps if you wish to collect test reports
       # - name: Upload Test Results
       #   uses: actions/upload-artifact@v3
