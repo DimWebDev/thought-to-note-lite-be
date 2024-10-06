@@ -176,7 +176,7 @@ By following these steps, you ensure that your project is set up with a consiste
 
 ## API Documentation
 
-The Thought-to-Note Lite API provides a set of endpoints to manage `Note` entities. This API supports typical CRUD operations (Create, Read, Update, Delete) as well as a search functionality to retrieve notes by title. The following documentation is based on the provided Postman collection.
+The Thought-to-Note Lite API provides a comprehensive set of endpoints to manage `Note` entities. This API supports typical CRUD operations (Create, Read, Update, Delete) as well as a search functionality to retrieve notes by title. The following documentation outlines the key endpoints, authentication details, and how to explore the API using **Swagger**.
 
 ### Base URL
 
@@ -186,21 +186,49 @@ http://localhost:8080/api/notes
 
 ### Authentication
 
-- **Basic Authentication:** All API endpoints require basic authentication.
-- **Username:** `yourUsername`
-- **Password:** `yourPassword`
+- **Basic Authentication**: All API endpoints require basic authentication.
+- **Username**: `yourUsername`
+- **Password**: `yourPassword`
 
-### Endpoints
+### Accessing the Swagger UI
+
+The API is documented and interactive via **Swagger** UI, allowing you to test all endpoints directly from your browser.
+
+1. **Run the Application**: Start the backend by running:
+
+    ```bash
+    ./mvnw spring-boot:run
+    ```
+
+2. **Access Swagger**: Open your browser and navigate to:
+
+    ```
+    http://localhost:8080/swagger-ui.html
+    ```
+
+   This brings up an interactive Swagger UI where you can explore and test all the API endpoints.
+
+3. **OpenAPI JSON Spec**: You can also access the raw OpenAPI documentation in JSON format at:
+
+    ```
+    http://localhost:8080/v3/api-docs
+    ```
+
+---
+
+### Endpoints Overview
+
+Below are the main API endpoints for managing notes, which are also accessible through the Swagger UI for live testing.
 
 #### 1. **Get All Notes**
 
-- **Endpoint:** `/api/notes`
-- **Method:** `GET`
-- **Description:** Retrieves a list of all notes.
-- **Response:**
-   - **200 OK:** Returns a JSON array of notes.
+- **Endpoint**: `/api/notes`
+- **Method**: `GET`
+- **Description**: Retrieves a list of all notes.
+- **Response**:
+  - **200 OK**: Returns a JSON array of notes.
 
-- **Example Request:**
+- **Example Request**:
 
 ```http
 GET http://localhost:8080/api/notes
@@ -208,16 +236,16 @@ GET http://localhost:8080/api/notes
 
 #### 2. **Get Note by ID**
 
-- **Endpoint:** `/api/notes/{id}`
-- **Method:** `GET`
-- **Description:** Retrieves a specific note by its ID.
-- **Path Variable:**
-   - **`id`** (integer): The ID of the note to retrieve.
-- **Response:**
-   - **200 OK:** Returns the note corresponding to the specified ID.
-   - **404 Not Found:** If the note does not exist.
+- **Endpoint**: `/api/notes/{id}`
+- **Method**: `GET`
+- **Description**: Retrieves a specific note by its ID.
+- **Path Variable**:
+  - **`id`** (integer): The ID of the note to retrieve.
+- **Response**:
+  - **200 OK**: Returns the note corresponding to the specified ID.
+  - **404 Not Found**: If the note does not exist.
 
-- **Example Request:**
+- **Example Request**:
 
 ```http
 GET http://localhost:8080/api/notes/1
@@ -225,19 +253,19 @@ GET http://localhost:8080/api/notes/1
 
 #### 3. **Create Note**
 
-- **Endpoint:** `/api/notes`
-- **Method:** `POST`
-- **Description:** Creates a new note.
-- **Request Headers:**
-   - **Content-Type:** `application/json`
-- **Request Body:**
-   - **`title`** (string): The title of the note.
-   - **`content`** (string): The content of the note.
-- **Response:**
-   - **201 Created:** Returns the created note.
-   - **400 Bad Request:** If the input data is invalid.
+- **Endpoint**: `/api/notes`
+- **Method**: `POST`
+- **Description**: Creates a new note.
+- **Request Headers**:
+  - **Content-Type**: `application/json`
+- **Request Body**:
+  - **`title`** (string): The title of the note.
+  - **`content`** (string): The content of the note.
+- **Response**:
+  - **201 Created**: Returns the created note.
+  - **400 Bad Request**: If the input data is invalid.
 
-- **Example Request:**
+- **Example Request**:
 
 ```http
 POST http://localhost:8080/api/notes
@@ -251,22 +279,22 @@ Content-Type: application/json
 
 #### 4. **Update Note**
 
-- **Endpoint:** `/api/notes/{id}`
-- **Method:** `PUT`
-- **Description:** Updates an existing note.
-- **Path Variable:**
-   - **`id`** (integer): The ID of the note to update.
-- **Request Headers:**
-   - **Content-Type:** `application/json`
-- **Request Body:**
-   - **`title`** (string): The updated title of the note.
-   - **`content`** (string): The updated content of the note.
-- **Response:**
-   - **200 OK:** Returns the updated note.
-   - **404 Not Found:** If the note does not exist.
-   - **400 Bad Request:** If the input data is invalid.
+- **Endpoint**: `/api/notes/{id}`
+- **Method**: `PUT`
+- **Description**: Updates an existing note.
+- **Path Variable**:
+  - **`id`** (integer): The ID of the note to update.
+- **Request Headers**:
+  - **Content-Type**: `application/json`
+- **Request Body**:
+  - **`title`** (string): The updated title of the note.
+  - **`content`** (string): The updated content of the note.
+- **Response**:
+  - **200 OK**: Returns the updated note.
+  - **404 Not Found**: If the note does not exist.
+  - **400 Bad Request**: If the input data is invalid.
 
-- **Example Request:**
+- **Example Request**:
 
 ```http
 PUT http://localhost:8080/api/notes/1
@@ -280,16 +308,16 @@ Content-Type: application/json
 
 #### 5. **Delete Note**
 
-- **Endpoint:** `/api/notes/{id}`
-- **Method:** `DELETE`
-- **Description:** Deletes a note by its ID.
-- **Path Variable:**
-   - **`id`** (integer): The ID of the note to delete.
-- **Response:**
-   - **204 No Content:** If the note was successfully deleted.
-   - **404 Not Found:** If the note does not exist.
+- **Endpoint**: `/api/notes/{id}`
+- **Method**: `DELETE`
+- **Description**: Deletes a note by its ID.
+- **Path Variable**:
+  - **`id`** (integer): The ID of the note to delete.
+- **Response**:
+  - **204 No Content**: If the note was successfully deleted.
+  - **404 Not Found**: If the note does not exist.
 
-- **Example Request:**
+- **Example Request**:
 
 ```http
 DELETE http://localhost:8080/api/notes/1
@@ -297,30 +325,50 @@ DELETE http://localhost:8080/api/notes/1
 
 #### 6. **Search Notes by Title**
 
-- **Endpoint:** `/api/notes/search`
-- **Method:** `GET`
-- **Description:** Searches for notes by their title.
-- **Query Parameter:**
-   - **`title`** (string): The keyword to search for in the note titles.
-- **Response:**
-   - **200 OK:** Returns a JSON array of notes that match the search criteria.
+- **Endpoint**: `/api/notes/search`
+- **Method**: `GET`
+- **Description**: Searches for notes by their title.
+- **Query Parameter**:
+  - **`title`** (string): The keyword to search for in the note titles.
+- **Response**:
+  - **200 OK**: Returns a JSON array of notes that match the search criteria.
 
-- **Example Request:**
+- **Example Request**:
 
 ```http
 GET http://localhost:8080/api/notes/search?title=Test
 ```
 
-### Notes
+---
 
-- Ensure that each request includes the correct authentication credentials using **Basic Auth** in tools like Postman.
-- All requests and responses use `application/json` as the content type.
+### Disable Security for Development
+
+To make it easier to interact with the API during local development, you can disable authentication by adding the following snippet to the `application.properties` file:
+
+```properties
+# Disable Security (Development Only)
+spring.security.user.name=yourUsername
+spring.security.user.password=yourPassword
+spring.security.user.roles=USER
+```
+
+This will bypass authentication requirements, allowing you to explore the API more freely during development.
+
+> **Important**: This configuration is intended for **local development only**. Ensure that security is properly configured for any production environments.
+
+---
 
 ### Postman Collection
 
-To facilitate testing and development, a Postman collection (`postman_collection.json`) is included. This collection contains pre-configured requests for all the endpoints mentioned above. You can import this collection into Postman to quickly start testing the API.
+To facilitate manual testing or integration with Postman, a pre-configured Postman collection is included in the repository:
+
+- **File Location**: `api/postman_collection.json`
+
+You can import this collection into Postman to quickly test all the API endpoints mentioned above.
 
 ---
+
+By using the Swagger UI or Postman collection, you can explore the Thought-to-Note Lite API efficiently. The Swagger documentation provides a convenient, interactive interface for testing endpoints, while the Postman collection allows quick integration into your workflows.
 
 
 ## Code Structure and Design
