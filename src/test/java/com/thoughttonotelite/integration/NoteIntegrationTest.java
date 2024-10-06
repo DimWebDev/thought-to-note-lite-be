@@ -2,14 +2,16 @@ package com.thoughttonotelite.integration;
 
 import com.thoughttonotelite.model.Note;
 import com.thoughttonotelite.repository.NoteRepository;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.*;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -22,7 +24,7 @@ public class NoteIntegrationTest {
 
     @Container
     public static PostgreSQLContainer<?> postgresqlContainer = new PostgreSQLContainer<>("postgres:16")
-            .withDatabaseName("testdb")
+            .withDatabaseName("integrationdb")
             .withUsername("postgres")
             .withPassword("postgres");
 
@@ -35,40 +37,41 @@ public class NoteIntegrationTest {
     @Autowired
     private NoteRepository noteRepository;
 
-    @BeforeAll
-    public static void setup() {
-        postgresqlContainer.start();
-        System.setProperty("spring.datasource.url", postgresqlContainer.getJdbcUrl());
-        System.setProperty("spring.datasource.username", postgresqlContainer.getUsername());
-        System.setProperty("spring.datasource.password", postgresqlContainer.getPassword());
-    }
-
-    @AfterAll
-    public static void tearDown() {
-        postgresqlContainer.stop();
+    @DynamicPropertySource
+    static void configureProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", postgresqlContainer::getJdbcUrl);
+        registry.add("spring.datasource.username", postgresqlContainer::getUsername);
+        registry.add("spring.datasource.password", postgresqlContainer::getPassword);
+        registry.add("spring.jpa.hibernate.ddl-auto", () -> "create-drop"); // Ensures a clean schema for each test
     }
 
     @Test
     public void testCreateAndRetrieveNote() {
-        // Create a new note
+        // Ensure the database is clean before the test
+        noteRepository.deleteAll();
+
+        // Create a new Note object
         Note note = new Note();
         note.setTitle("Integration Test Note");
         note.setContent("Content for integration test.");
 
+        // Set up HTTP headers with Basic Auth
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBasicAuth("yourUsername", "yourPassword"); // Ensure authentication
+        headers.setBasicAuth("yourUsername", "yourPassword"); // Ensure these credentials match your test configuration
 
+        // Create HTTP entity with the Note object and headers
         HttpEntity<Note> request = new HttpEntity<>(note, headers);
 
-        ResponseEntity<Note> response = restTemplate.postForEntity(createURL("/api/notes"), request, Note.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        Note createdNote = response.getBody();
+        // Send POST request to create the note
+        ResponseEntity<Note> postResponse = restTemplate.postForEntity(createURL("/api/notes"), request, Note.class);
+        assertThat(postResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        Note createdNote = postResponse.getBody();
         assertThat(createdNote).isNotNull();
         assertThat(createdNote.getId()).isNotNull();
         assertThat(createdNote.getTitle()).isEqualTo("Integration Test Note");
 
-        // Retrieve the created note
+        // Send GET request to retrieve the created note
         ResponseEntity<Note> getResponse = restTemplate.exchange(
                 createURL("/api/notes/" + createdNote.getId()),
                 HttpMethod.GET,
@@ -81,6 +84,7 @@ public class NoteIntegrationTest {
         assertThat(retrievedNote.getTitle()).isEqualTo("Integration Test Note");
     }
 
+    // Helper method to construct the full URL for API requests
     private String createURL(String uri) {
         return "http://localhost:" + port + uri;
     }

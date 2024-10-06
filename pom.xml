@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.thoughttonotelite</groupId>
-	<artifactId>thought-to-note-lite-be </artifactId>
+	<artifactId>thought-to-note-lite-be</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>thought-to-note-lite-be </name>
 	<description>Thought-to-Note Lite Backend - A Note-Taking Application Backend</description>
