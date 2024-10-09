@@ -1,8 +1,88 @@
 # Thought-to-Note Lite Backend
 
+# 📑 **Table of Contents**
+
+1. **🔍 [Overview](#overview)**
+2. **🚀 [Quick Start Guide](#quick-start-guide)**
+   - 📂 **[Clone the Repository](#1-clone-the-repository)**
+   - 🐳 **[Set Up Docker and PostgreSQL](#2-set-up-docker-and-postgresql)**
+   - ☕ **[Set Up Maven Wrapper](#3-set-up-maven-wrapper)**
+   - 🚦 **[Run the Spring Boot Application](#4-run-the-spring-boot-application)**
+   - ✅ **[Verify the Application](#5-verify-the-application)**
+3. **📌 [Prerequisites](#prerequisites)**
+4. **🗂️ [Project Structure](#project-structure)**
+5. **⚙️ [Docker and PostgreSQL Setup](#docker-and-postgresql-setup)**
+6. **▶️ [Running the Project](#running-the-project)**
+7. **📖 [API Documentation](#api-documentation)**
+   -  🌐 **[Base URL](#base-url)**
+   - 🔑 **[Authentication](#authentication)**
+   - 📜 **[Swagger UI Access](#accessing-the-swagger-ui)**
+   - 📌 **[Endpoints Overview](#endpoints-overview)**
+   - 🚫 **[Disable Security for Development](#disable-security-for-development)**
+   - 📬 **[Postman Collection](#postman-collection)**
+8. **🏗️ [Code Structure and Design](#code-structure-and-design)**
+9. **🧪 [Testing](#testing)**
+10. **🔒 [Security Configuration](#security-configuration)**
+11. **✨ [Final Notes](#final-notes)**
+
+---
+
+
 ## Overview
 
-This project is the backend for the Thought-to-Note Lite application, built using Spring Boot. It uses PostgreSQL as the database, managed via Docker Compose.
+This project serves as the backend for the Thought-to-Note Lite application, built using Spring Boot. It acts as a core microservice, providing an API that manages note-related data and business logic. The backend uses PostgreSQL as the database, managed via Docker Compose, to ensure consistency and scalability.
+
+The frontend of the Thought-to-Note Lite application is a React client, which communicates with this backend through RESTful API calls. Together, the frontend and backend offer a complete solution for managing and storing user notes, providing a seamless user experience.
+## Quick Start Guide
+
+Follow these steps to quickly set up and run the Thought-to-Note Lite backend on your local machine.
+
+### 1. Clone the Repository
+
+First, clone the repository to your local machine:
+
+```bash
+clone the repository and then
+cd ThoughtToNoteLite-Backend
+```
+
+### 2. Set Up Docker and PostgreSQL
+
+Ensure that Docker and Docker Compose are installed. Then, use Docker Compose to start the PostgreSQL database:
+
+```bash
+docker-compose -f docker/compose.yaml up -d
+```
+
+This command will create a containerized PostgreSQL database instance needed for the backend.
+
+### 3. Set Up Maven Wrapper
+
+Run the following command to generate and use the Maven Wrapper (this ensures consistent Maven versions):
+
+```bash
+mvn -N io.takari:maven:wrapper -Dmaven=3.9.8
+```
+
+### 4. Run the Spring Boot Application
+
+Use the Maven Wrapper to start the Spring Boot application:
+
+```bash
+./mvnw spring-boot:run
+```
+
+### 5. Verify the Application
+
+After running the application, verify that it is working by accessing the base URL in your browser or through a tool like Postman:
+
+```
+http://localhost:8080/api/notes
+```
+
+You should see the application running successfully.
+
+---
 
 ## Prerequisites
 
@@ -136,7 +216,7 @@ To ensure consistency across different environments, it's recommended to set up 
     ```
   - This command will create a `.mvn/wrapper` directory containing the necessary Maven Wrapper files and ensure that the wrapper uses Maven version `3.9.8`, which is specified by this project.
 
-The Maven Wrapper also makes it easier for those who do not have Maven installed globally or have a different version, as it will automatically download and use the version specified by the project when the repository is cloned. This makes it easy to run the project locally and avoids any compatibility issues. 
+The Maven Wrapper also makes it easier for those who do not have Maven installed globally or have a different version, as it will automatically download and use the version specified by the project when the repository is cloned. This makes it easy to run the project locally and avoids any compatibility issues.
 
 - **Using Maven Wrapper**:
 
@@ -188,9 +268,6 @@ After running the application, you can verify that it is running successfully by
   Open a web browser and navigate to `http://localhost:8080` (or the configured port) to see if the API is accessible.
 
 ---
-
-
-
 
 ## API Documentation
 
@@ -399,7 +476,6 @@ You can import this collection into Postman to quickly test all the API endpoint
 By using the Swagger UI or Postman collection, you can explore the Thought-to-Note Lite API efficiently. The Swagger documentation provides a convenient, interactive interface for testing endpoints, while the Postman collection allows quick integration into your workflows.
 
 
-
 ## Code Structure and Design
 
 #### 1. **`Note`**** Model Entity**
@@ -486,9 +562,6 @@ While JPA handles most of the data interactions, JDBC is inherently employed in 
 - **Database Schema Integration:** JPA automatically manages the database schema, creating and updating tables like `notes` based on the entity definitions. JDBC ensures these operations are executed efficiently within the PostgreSQL database.
 
 The application’s integration of JPA and JDBC allows for seamless and efficient interaction with the PostgreSQL database, ensuring that the database schema is properly managed and that data operations are executed reliably. The configuration ensures that the application’s entities, such as `Note`, are effectively mapped to the database, with Hibernate handling the ORM (Object-Relational Mapping) duties and JDBC executing the necessary SQL commands.
-
-
-
 
 ---
 
@@ -628,5 +701,6 @@ By adhering to these best practices, the application can maintain robust securit
 
 ## Final Notes
 
-The Thought-to-Note Lite backend is structured with a layered architecture that promotes modularity, maintainability, and clarity. The comprehensive test suite, integrated with Testcontainers for an isolated testing environment, ensures that each component functions correctly both in isolation and in conjunction with others. Security configurations are thoughtfully set up to balance ease of development with the necessary safeguards, with clear guidelines for enhancing security in production settings.
+The Thought-to-Note Lite backend is meticulously structured with a layered architecture that promotes modularity, maintainability, and clarity. The comprehensive test suite, integrated with Testcontainers for an isolated testing environment, ensures that each component functions correctly both in isolation and in conjunction with others. Security configurations are thoughtfully set up to balance ease of development with the necessary safeguards, with clear guidelines for enhancing security in production settings.
 
+By maintaining a robust testing strategy and adhering to best practices in security and application design, the Thought-to-Note Lite backend is well-equipped to deliver reliable and secure note-taking functionalities in real-world usage scenarios.
