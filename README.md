@@ -27,12 +27,16 @@
 
 ---
 
+>[INFO]
+> For a comprehensive overview of how the Thought-to-Note Lite system works, including both backend and frontend components, please refer to the Central Documentation. This central guide explains the system architecture, setup, interaction, and testing in detail. To explore the frontend client, which interacts with this backend API, visit the [Frontnd Repository](https://github.com/DimWebDev/thought-to-note-lite-fe/tree/develop)
+
 
 ## Overview
 
 This project serves as the backend for the Thought-to-Note Lite application, built using Spring Boot. It acts as a core microservice, providing an API that manages note-related data and business logic. The backend uses PostgreSQL as the database, managed via Docker Compose, to ensure consistency and scalability.
 
 The frontend of the Thought-to-Note Lite application is a React client, which communicates with this backend through RESTful API calls. Together, the frontend and backend offer a complete solution for managing and storing user notes, providing a seamless user experience.
+
 ## Quick Start Guide
 
 Follow these steps to quickly set up and run the Thought-to-Note Lite backend on your local machine.
