@@ -28,7 +28,7 @@
 ---
 
 > [!TIP]
-> For a comprehensive overview of how the Thought-to-Note Lite system works, including both backend and frontend components, please refer to the [Central Documentation](https://github.com/DimWebDev/Thought-to-Note-Lite---Central-Documentation). This central guide explains the system architecture, setup, interaction, and testing in detail. To explore the frontend client, which interacts with this backend API, visit the [Frontend Repository](https://github.com/DimWebDev/thought-to-note-lite-fe/tree/develop)
+> For a comprehensive overview of how the Thought-to-Note Lite system works, including both backend and frontend components, please refer to the [Central Documentation](https://github.com/DimWebDev/Thought-to-Note-Lite---Central-Documentation). This central guide explains the system architecture, setup, interaction, and testing in detail. To explore the frontend client, which interacts with this backend API, visit the [Frontend Repository](https://github.com/DimWebDev/thought-to-note-lite-fe/tree/develop).
 
 
 ## Overview
