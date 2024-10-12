@@ -503,7 +503,7 @@ The `Note` entity is the core data model used in the Thought-to-Note Lite applic
 
 This entity allows for seamless interaction with the database, where each instance of `Note` corresponds to a row in the `notes` table.
 
-#### 2. **`NoteService`**** Class**
+#### 2. **`NoteService` Class**
 
 The `NoteService` class is responsible for implementing the business logic related to the `Note` entity. It serves as a mediator between the `NoteController` and the `NoteRepository`.
 
@@ -517,7 +517,7 @@ The service layer ensures that any business rules are enforced before interactin
 
 - **Search Functionality:** The service includes a method to search for notes by their title, allowing users to find notes based on partial matches within the `title` column.
 
-#### 3. **`NoteController`**** Class**
+#### 3. **`NoteController` Class**
 
 The `NoteController` is a REST controller that handles HTTP requests related to the `Note` entity. It exposes endpoints for the following operations:
 
@@ -529,7 +529,7 @@ The `NoteController` is a REST controller that handles HTTP requests related to 
 
 Each endpoint corresponds to a method in the `NoteService` class, and the controller is responsible for mapping the HTTP requests to these service methods. It also handles the construction of appropriate HTTP responses, such as returning `201 Created` for successful creation or `404 Not Found` when a note doesn't exist.
 
-#### 4. **`DataInitializer`**** Class**
+#### 4. **`DataInitializer` Class**
 
 The `DataInitializer` class is a Spring component that implements `ApplicationRunner`. It is responsible for loading initial data into the `notes` table when the application starts, but only if the table is empty.
 
