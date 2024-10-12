@@ -46,7 +46,7 @@ Follow these steps to quickly set up and run the Thought-to-Note Lite backend on
 First, clone the repository to your local machine:
 
 ```bash
-clone the repository and then
+git clone <repository-url>
 cd ThoughtToNoteLite-Backend
 ```
 
